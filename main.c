@@ -4,20 +4,13 @@
 #include <sys/time.h>
 
 int main() {
-//    int num;
-//    scanf("%d", &num);
-
-    const int n = 400;
-    const int m = 400;
-    const int p = 400;
+    const int n = 500;
+    const int m = 600;
+    const int p = 700;
 
     float* matrix1 = (float*)malloc(n * m * sizeof(float));
     float* matrix2 = (float*)malloc(m * p * sizeof(float));
     float* matrix3 = (float*)malloc(n * p * sizeof(float));
-
-//    int matrix1[n][m] = {{1, 2},{3, 4}};
-//    int matrix2[m][p] = {{5, 6},{7, 8}};
-//    int matrix3[n][p];
 
     for(int i = 0; i < n * m; i++){
         matrix1[i] = i;
@@ -29,26 +22,18 @@ int main() {
     struct timeval stop, start;
     gettimeofday(&start, NULL);
 
-//    int answ2 = 1;
-
-//    int answ[100];
-//    for(int i = 0; i<100; i++) answ[i] = 0;
-
 #pragma omp parallel
     {
-//        int thread_number = omp_get_thread_num();
-//        int number_of_threads = omp_get_num_threads();
 
-#pragma omp for schedule(static, 1)
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < p; j++){
+#pragma omp for
+        for(int i2 = 0; i2 < n * p; i2++){
+            int j = i2 % n;
 
-                int tt = 0;
-                for(int k = 0; k < m; k++){
-                    tt += matrix1[i * n + k] * matrix2[k * m + j];
-                }
-                matrix3[i * n + j] = tt;
+            float tt = 0;
+            for(int k = 0; k < m; k++){
+                tt += matrix1[i2 - j + k] * matrix2[k * m + j];
             }
+            matrix3[i2] = tt;
         }
     }
 
