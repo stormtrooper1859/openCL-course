@@ -1,56 +1,67 @@
 #include <stdio.h>
 #include <omp.h>
+#include <stdlib.h>
 #include <sys/time.h>
 
 int main() {
-    int num;
-    scanf("%d", &num);
+//    int num;
+//    scanf("%d", &num);
+
+    const int n = 400;
+    const int m = 400;
+    const int p = 400;
+
+    float* matrix1 = (float*)malloc(n * m * sizeof(float));
+    float* matrix2 = (float*)malloc(m * p * sizeof(float));
+    float* matrix3 = (float*)malloc(n * p * sizeof(float));
+
+//    int matrix1[n][m] = {{1, 2},{3, 4}};
+//    int matrix2[m][p] = {{5, 6},{7, 8}};
+//    int matrix3[n][p];
+
+    for(int i = 0; i < n * m; i++){
+        matrix1[i] = i;
+    }
+    for(int i = 0; i < m * p; i++){
+        matrix2[i] = i + n * m;
+    }
 
     struct timeval stop, start;
     gettimeofday(&start, NULL);
 
-    int answ2 = 1;
+//    int answ2 = 1;
 
-    int answ[100];
-    for(int i = 0; i<100; i++) answ[i] = 0;
+//    int answ[100];
+//    for(int i = 0; i<100; i++) answ[i] = 0;
 
 #pragma omp parallel
     {
-        int answ3 = 0;
-        int thread_number = omp_get_thread_num();
-        int number_of_threads = omp_get_num_threads();
-        int low, high;
+//        int thread_number = omp_get_thread_num();
+//        int number_of_threads = omp_get_num_threads();
 
-        low = 3 + thread_number * 2;
-        high = num;
-        int step = number_of_threads * 2;
+#pragma omp for schedule(static, 1)
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < p; j++){
 
-#pragma omp for schedule(dynamic, 10)
-        for (int i = 3; i <= high; i += 2) {
-//        for (int i = low; i <= high; i += step) {
-            int prime = 1;
-            for (int t = 3; t * t <= i; t += 2) {
-                if (i % t == 0) {
-                    prime = 0;
-                    break;
+                int tt = 0;
+                for(int k = 0; k < m; k++){
+                    tt += matrix1[i * n + k] * matrix2[k * m + j];
                 }
-            }
-            if (prime) {
-//#pragma omp atomic
-                answ3++;
+                matrix3[i * n + j] = tt;
             }
         }
-
-#pragma omp critical
-        answ2+=answ3;
     }
-
-    for(int i = 0; i<100; i++) answ2+=answ[i];
-
-    printf("%d\n", answ2);
 
     gettimeofday(&stop, NULL);
     long long int tt = ((stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec) / 1000;
+
+//    for(int i = 0; i < n; i++){
+//        for(int j = 0; j < p; j++){
+//            printf("%d ", matrix3[i * n + j]);
+//        }
+//        printf("\n");
+//    }
+
     printf("time: %lld ms\n", tt);
 
     return 0;
