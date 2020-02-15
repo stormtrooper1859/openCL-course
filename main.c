@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include <omp.h>
+#include <sys/time.h>
 
 int main() {
     int num;
     scanf("%d", &num);
+
+    struct timeval stop, start;
+    gettimeofday(&start, NULL);
 
     int answ2 = 1;
 
@@ -36,8 +40,11 @@ int main() {
 
     for(int i = 0; i<100; i++) answ2+=answ[i];
 
-
     printf("%d\n", answ2);
+
+    gettimeofday(&stop, NULL);
+    long long int tt = ((stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec) / 1000;
+    printf("time: %lld ms\n", tt);
 
     return 0;
 }
