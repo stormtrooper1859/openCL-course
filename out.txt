@@ -1,0 +1,442 @@
+
+hello:	file format Mach-O 64-bit x86-64
+
+Disassembly of section __TEXT,__text:
+__text:
+100000d30:	55 	pushq	%rbp
+100000d31:	48 89 e5 	movq	%rsp, %rbp
+100000d34:	31 c0 	xorl	%eax, %eax
+100000d36:	c7 45 fc 00 00 00 00 	movl	$0, -4(%rbp)
+100000d3d:	5d 	popq	%rbp
+100000d3e:	c3 	retq
+100000d3f:	90 	nop
+100000d40:	55 	pushq	%rbp
+100000d41:	48 89 e5 	movq	%rsp, %rbp
+100000d44:	48 83 ec 50 	subq	$80, %rsp
+100000d48:	48 89 f8 	movq	%rdi, %rax
+100000d4b:	48 89 75 f8 	movq	%rsi, -8(%rbp)
+100000d4f:	48 8b 55 f8 	movq	-8(%rbp), %rdx
+100000d53:	48 8d 35 36 02 00 00 	leaq	566(%rip), %rsi
+100000d5a:	48 8d 4d e0 	leaq	-32(%rbp), %rcx
+100000d5e:	48 89 7d c8 	movq	%rdi, -56(%rbp)
+100000d62:	48 89 cf 	movq	%rcx, %rdi
+100000d65:	48 89 45 c0 	movq	%rax, -64(%rbp)
+100000d69:	48 89 4d b8 	movq	%rcx, -72(%rbp)
+100000d6d:	e8 ce 01 00 00 	callq	462 <dyld_stub_binder+0x100000f40>
+100000d72:	48 8d 15 1f 02 00 00 	leaq	543(%rip), %rdx
+100000d79:	48 8b 7d c8 	movq	-56(%rbp), %rdi
+100000d7d:	48 8b 75 b8 	movq	-72(%rbp), %rsi
+100000d81:	e8 3a 00 00 00 	callq	58 <__ZNSt3__1plIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_12basic_stringIT_T0_T1_EEOS9_PKS6_>
+100000d86:	e9 00 00 00 00 	jmp	0 <__Z5helloRNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE+0x4b>
+100000d8b:	48 8d 7d e0 	leaq	-32(%rbp), %rdi
+100000d8f:	e8 a6 01 00 00 	callq	422 <dyld_stub_binder+0x100000f3a>
+100000d94:	48 8b 45 c0 	movq	-64(%rbp), %rax
+100000d98:	48 83 c4 50 	addq	$80, %rsp
+100000d9c:	5d 	popq	%rbp
+100000d9d:	c3 	retq
+100000d9e:	89 d1 	movl	%edx, %ecx
+100000da0:	48 89 45 d8 	movq	%rax, -40(%rbp)
+100000da4:	89 4d d4 	movl	%ecx, -44(%rbp)
+100000da7:	48 8d 7d e0 	leaq	-32(%rbp), %rdi
+100000dab:	e8 8a 01 00 00 	callq	394 <dyld_stub_binder+0x100000f3a>
+100000db0:	48 8b 7d d8 	movq	-40(%rbp), %rdi
+100000db4:	e8 75 01 00 00 	callq	373 <dyld_stub_binder+0x100000f2e>
+100000db9:	0f 0b 	ud2
+100000dbb:	0f 1f 44 00 00 	nopl	(%rax,%rax)
+100000dc0:	55 	pushq	%rbp
+100000dc1:	48 89 e5 	movq	%rsp, %rbp
+100000dc4:	48 83 ec 20 	subq	$32, %rsp
+100000dc8:	48 89 f8 	movq	%rdi, %rax
+100000dcb:	48 89 75 f8 	movq	%rsi, -8(%rbp)
+100000dcf:	48 89 55 f0 	movq	%rdx, -16(%rbp)
+100000dd3:	48 8b 55 f8 	movq	-8(%rbp), %rdx
+100000dd7:	48 8b 75 f0 	movq	-16(%rbp), %rsi
+100000ddb:	48 89 7d e8 	movq	%rdi, -24(%rbp)
+100000ddf:	48 89 d7 	movq	%rdx, %rdi
+100000de2:	48 89 45 e0 	movq	%rax, -32(%rbp)
+100000de6:	e8 49 01 00 00 	callq	329 <dyld_stub_binder+0x100000f34>
+100000deb:	48 89 c7 	movq	%rax, %rdi
+100000dee:	e8 1d 00 00 00 	callq	29 <__ZNSt3__1L4moveIRNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEEONS_16remove_referenceIT_E4typeEOS9_>
+100000df3:	48 8b 7d e8 	movq	-24(%rbp), %rdi
+100000df7:	48 89 c6 	movq	%rax, %rsi
+100000dfa:	e8 21 00 00 00 	callq	33 <__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1EOS5_>
+100000dff:	48 8b 45 e0 	movq	-32(%rbp), %rax
+100000e03:	48 83 c4 20 	addq	$32, %rsp
+100000e07:	5d 	popq	%rbp
+100000e08:	c3 	retq
+100000e09:	0f 1f 80 00 00 00 00 	nopl	(%rax)
+100000e10:	55 	pushq	%rbp
+100000e11:	48 89 e5 	movq	%rsp, %rbp
+100000e14:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000e18:	48 8b 45 f8 	movq	-8(%rbp), %rax
+100000e1c:	5d 	popq	%rbp
+100000e1d:	c3 	retq
+100000e1e:	66 90 	nop
+100000e20:	55 	pushq	%rbp
+100000e21:	48 89 e5 	movq	%rsp, %rbp
+100000e24:	48 83 ec 10 	subq	$16, %rsp
+100000e28:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000e2c:	48 89 75 f0 	movq	%rsi, -16(%rbp)
+100000e30:	48 8b 7d f8 	movq	-8(%rbp), %rdi
+100000e34:	48 8b 75 f0 	movq	-16(%rbp), %rsi
+100000e38:	e8 13 00 00 00 	callq	19 <__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2EOS5_>
+100000e3d:	48 83 c4 10 	addq	$16, %rsp
+100000e41:	5d 	popq	%rbp
+100000e42:	c3 	retq
+100000e43:	66 2e 0f 1f 84 00 00 00 00 00 	nopw	%cs:(%rax,%rax)
+100000e4d:	0f 1f 00 	nopl	(%rax)
+100000e50:	55 	pushq	%rbp
+100000e51:	48 89 e5 	movq	%rsp, %rbp
+100000e54:	48 83 ec 20 	subq	$32, %rsp
+100000e58:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000e5c:	48 89 75 f0 	movq	%rsi, -16(%rbp)
+100000e60:	48 8b 75 f8 	movq	-8(%rbp), %rsi
+100000e64:	48 8b 7d f0 	movq	-16(%rbp), %rdi
+100000e68:	48 89 75 e8 	movq	%rsi, -24(%rbp)
+100000e6c:	e8 2f 00 00 00 	callq	47 <__ZNSt3__1L4moveIRNS_17__compressed_pairINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5__repES6_EEEEONS_16remove_referenceIT_E4typeEOSC_>
+100000e71:	48 8b 30 	movq	(%rax), %rsi
+100000e74:	48 8b 7d e8 	movq	-24(%rbp), %rdi
+100000e78:	48 89 37 	movq	%rsi, (%rdi)
+100000e7b:	48 8b 70 08 	movq	8(%rax), %rsi
+100000e7f:	48 89 77 08 	movq	%rsi, 8(%rdi)
+100000e83:	48 8b 40 10 	movq	16(%rax), %rax
+100000e87:	48 89 47 10 	movq	%rax, 16(%rdi)
+100000e8b:	48 8b 7d f0 	movq	-16(%rbp), %rdi
+100000e8f:	e8 1c 00 00 00 	callq	28 <__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__zeroEv>
+100000e94:	48 83 c4 20 	addq	$32, %rsp
+100000e98:	5d 	popq	%rbp
+100000e99:	c3 	retq
+100000e9a:	66 0f 1f 44 00 00 	nopw	(%rax,%rax)
+100000ea0:	55 	pushq	%rbp
+100000ea1:	48 89 e5 	movq	%rsp, %rbp
+100000ea4:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000ea8:	48 8b 45 f8 	movq	-8(%rbp), %rax
+100000eac:	5d 	popq	%rbp
+100000ead:	c3 	retq
+100000eae:	66 90 	nop
+100000eb0:	55 	pushq	%rbp
+100000eb1:	48 89 e5 	movq	%rsp, %rbp
+100000eb4:	48 83 ec 20 	subq	$32, %rsp
+100000eb8:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000ebc:	48 8b 7d f8 	movq	-8(%rbp), %rdi
+100000ec0:	e8 3b 00 00 00 	callq	59 <__ZNSt3__117__compressed_pairINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5__repES5_E5firstEv>
+100000ec5:	48 89 45 f0 	movq	%rax, -16(%rbp)
+100000ec9:	c7 45 ec 00 00 00 00 	movl	$0, -20(%rbp)
+100000ed0:	83 7d ec 03 	cmpl	$3, -20(%rbp)
+100000ed4:	0f 83 1f 00 00 00 	jae	31 <__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__zeroEv+0x49>
+100000eda:	48 8b 45 f0 	movq	-16(%rbp), %rax
+100000ede:	8b 4d ec 	movl	-20(%rbp), %ecx
+100000ee1:	89 ca 	movl	%ecx, %edx
+100000ee3:	48 c7 04 d0 00 00 00 00 	movq	$0, (%rax,%rdx,8)
+100000eeb:	8b 45 ec 	movl	-20(%rbp), %eax
+100000eee:	83 c0 01 	addl	$1, %eax
+100000ef1:	89 45 ec 	movl	%eax, -20(%rbp)
+100000ef4:	e9 d7 ff ff ff 	jmp	-41 <__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__zeroEv+0x20>
+100000ef9:	48 83 c4 20 	addq	$32, %rsp
+100000efd:	5d 	popq	%rbp
+100000efe:	c3 	retq
+100000eff:	90 	nop
+100000f00:	55 	pushq	%rbp
+100000f01:	48 89 e5 	movq	%rsp, %rbp
+100000f04:	48 83 ec 10 	subq	$16, %rsp
+100000f08:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000f0c:	48 8b 7d f8 	movq	-8(%rbp), %rdi
+100000f10:	e8 0b 00 00 00 	callq	11 <__ZNSt3__122__compressed_pair_elemINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5__repELi0ELb0EE5__getEv>
+100000f15:	48 83 c4 10 	addq	$16, %rsp
+100000f19:	5d 	popq	%rbp
+100000f1a:	c3 	retq
+100000f1b:	0f 1f 44 00 00 	nopl	(%rax,%rax)
+100000f20:	55 	pushq	%rbp
+100000f21:	48 89 e5 	movq	%rsp, %rbp
+100000f24:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000f28:	48 8b 45 f8 	movq	-8(%rbp), %rax
+100000f2c:	5d 	popq	%rbp
+100000f2d:	c3 	retq
+
+_main:
+100000d30:	55 	pushq	%rbp
+100000d31:	48 89 e5 	movq	%rsp, %rbp
+100000d34:	31 c0 	xorl	%eax, %eax
+100000d36:	c7 45 fc 00 00 00 00 	movl	$0, -4(%rbp)
+100000d3d:	5d 	popq	%rbp
+100000d3e:	c3 	retq
+100000d3f:	90 	nop
+
+__Z5helloRNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE:
+100000d40:	55 	pushq	%rbp
+100000d41:	48 89 e5 	movq	%rsp, %rbp
+100000d44:	48 83 ec 50 	subq	$80, %rsp
+100000d48:	48 89 f8 	movq	%rdi, %rax
+100000d4b:	48 89 75 f8 	movq	%rsi, -8(%rbp)
+100000d4f:	48 8b 55 f8 	movq	-8(%rbp), %rdx
+100000d53:	48 8d 35 36 02 00 00 	leaq	566(%rip), %rsi
+100000d5a:	48 8d 4d e0 	leaq	-32(%rbp), %rcx
+100000d5e:	48 89 7d c8 	movq	%rdi, -56(%rbp)
+100000d62:	48 89 cf 	movq	%rcx, %rdi
+100000d65:	48 89 45 c0 	movq	%rax, -64(%rbp)
+100000d69:	48 89 4d b8 	movq	%rcx, -72(%rbp)
+100000d6d:	e8 ce 01 00 00 	callq	462 <dyld_stub_binder+0x100000f40>
+100000d72:	48 8d 15 1f 02 00 00 	leaq	543(%rip), %rdx
+100000d79:	48 8b 7d c8 	movq	-56(%rbp), %rdi
+100000d7d:	48 8b 75 b8 	movq	-72(%rbp), %rsi
+100000d81:	e8 3a 00 00 00 	callq	58 <__ZNSt3__1plIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_12basic_stringIT_T0_T1_EEOS9_PKS6_>
+100000d86:	e9 00 00 00 00 	jmp	0 <__Z5helloRNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE+0x4b>
+100000d8b:	48 8d 7d e0 	leaq	-32(%rbp), %rdi
+100000d8f:	e8 a6 01 00 00 	callq	422 <dyld_stub_binder+0x100000f3a>
+100000d94:	48 8b 45 c0 	movq	-64(%rbp), %rax
+100000d98:	48 83 c4 50 	addq	$80, %rsp
+100000d9c:	5d 	popq	%rbp
+100000d9d:	c3 	retq
+100000d9e:	89 d1 	movl	%edx, %ecx
+100000da0:	48 89 45 d8 	movq	%rax, -40(%rbp)
+100000da4:	89 4d d4 	movl	%ecx, -44(%rbp)
+100000da7:	48 8d 7d e0 	leaq	-32(%rbp), %rdi
+100000dab:	e8 8a 01 00 00 	callq	394 <dyld_stub_binder+0x100000f3a>
+100000db0:	48 8b 7d d8 	movq	-40(%rbp), %rdi
+100000db4:	e8 75 01 00 00 	callq	373 <dyld_stub_binder+0x100000f2e>
+100000db9:	0f 0b 	ud2
+100000dbb:	0f 1f 44 00 00 	nopl	(%rax,%rax)
+
+__ZNSt3__1plIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_12basic_stringIT_T0_T1_EEOS9_PKS6_:
+100000dc0:	55 	pushq	%rbp
+100000dc1:	48 89 e5 	movq	%rsp, %rbp
+100000dc4:	48 83 ec 20 	subq	$32, %rsp
+100000dc8:	48 89 f8 	movq	%rdi, %rax
+100000dcb:	48 89 75 f8 	movq	%rsi, -8(%rbp)
+100000dcf:	48 89 55 f0 	movq	%rdx, -16(%rbp)
+100000dd3:	48 8b 55 f8 	movq	-8(%rbp), %rdx
+100000dd7:	48 8b 75 f0 	movq	-16(%rbp), %rsi
+100000ddb:	48 89 7d e8 	movq	%rdi, -24(%rbp)
+100000ddf:	48 89 d7 	movq	%rdx, %rdi
+100000de2:	48 89 45 e0 	movq	%rax, -32(%rbp)
+100000de6:	e8 49 01 00 00 	callq	329 <dyld_stub_binder+0x100000f34>
+100000deb:	48 89 c7 	movq	%rax, %rdi
+100000dee:	e8 1d 00 00 00 	callq	29 <__ZNSt3__1L4moveIRNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEEONS_16remove_referenceIT_E4typeEOS9_>
+100000df3:	48 8b 7d e8 	movq	-24(%rbp), %rdi
+100000df7:	48 89 c6 	movq	%rax, %rsi
+100000dfa:	e8 21 00 00 00 	callq	33 <__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1EOS5_>
+100000dff:	48 8b 45 e0 	movq	-32(%rbp), %rax
+100000e03:	48 83 c4 20 	addq	$32, %rsp
+100000e07:	5d 	popq	%rbp
+100000e08:	c3 	retq
+100000e09:	0f 1f 80 00 00 00 00 	nopl	(%rax)
+
+__ZNSt3__1L4moveIRNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEEONS_16remove_referenceIT_E4typeEOS9_:
+100000e10:	55 	pushq	%rbp
+100000e11:	48 89 e5 	movq	%rsp, %rbp
+100000e14:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000e18:	48 8b 45 f8 	movq	-8(%rbp), %rax
+100000e1c:	5d 	popq	%rbp
+100000e1d:	c3 	retq
+100000e1e:	66 90 	nop
+
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1EOS5_:
+100000e20:	55 	pushq	%rbp
+100000e21:	48 89 e5 	movq	%rsp, %rbp
+100000e24:	48 83 ec 10 	subq	$16, %rsp
+100000e28:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000e2c:	48 89 75 f0 	movq	%rsi, -16(%rbp)
+100000e30:	48 8b 7d f8 	movq	-8(%rbp), %rdi
+100000e34:	48 8b 75 f0 	movq	-16(%rbp), %rsi
+100000e38:	e8 13 00 00 00 	callq	19 <__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2EOS5_>
+100000e3d:	48 83 c4 10 	addq	$16, %rsp
+100000e41:	5d 	popq	%rbp
+100000e42:	c3 	retq
+100000e43:	66 2e 0f 1f 84 00 00 00 00 00 	nopw	%cs:(%rax,%rax)
+100000e4d:	0f 1f 00 	nopl	(%rax)
+
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2EOS5_:
+100000e50:	55 	pushq	%rbp
+100000e51:	48 89 e5 	movq	%rsp, %rbp
+100000e54:	48 83 ec 20 	subq	$32, %rsp
+100000e58:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000e5c:	48 89 75 f0 	movq	%rsi, -16(%rbp)
+100000e60:	48 8b 75 f8 	movq	-8(%rbp), %rsi
+100000e64:	48 8b 7d f0 	movq	-16(%rbp), %rdi
+100000e68:	48 89 75 e8 	movq	%rsi, -24(%rbp)
+100000e6c:	e8 2f 00 00 00 	callq	47 <__ZNSt3__1L4moveIRNS_17__compressed_pairINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5__repES6_EEEEONS_16remove_referenceIT_E4typeEOSC_>
+100000e71:	48 8b 30 	movq	(%rax), %rsi
+100000e74:	48 8b 7d e8 	movq	-24(%rbp), %rdi
+100000e78:	48 89 37 	movq	%rsi, (%rdi)
+100000e7b:	48 8b 70 08 	movq	8(%rax), %rsi
+100000e7f:	48 89 77 08 	movq	%rsi, 8(%rdi)
+100000e83:	48 8b 40 10 	movq	16(%rax), %rax
+100000e87:	48 89 47 10 	movq	%rax, 16(%rdi)
+100000e8b:	48 8b 7d f0 	movq	-16(%rbp), %rdi
+100000e8f:	e8 1c 00 00 00 	callq	28 <__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__zeroEv>
+100000e94:	48 83 c4 20 	addq	$32, %rsp
+100000e98:	5d 	popq	%rbp
+100000e99:	c3 	retq
+100000e9a:	66 0f 1f 44 00 00 	nopw	(%rax,%rax)
+
+__ZNSt3__1L4moveIRNS_17__compressed_pairINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5__repES6_EEEEONS_16remove_referenceIT_E4typeEOSC_:
+100000ea0:	55 	pushq	%rbp
+100000ea1:	48 89 e5 	movq	%rsp, %rbp
+100000ea4:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000ea8:	48 8b 45 f8 	movq	-8(%rbp), %rax
+100000eac:	5d 	popq	%rbp
+100000ead:	c3 	retq
+100000eae:	66 90 	nop
+
+__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__zeroEv:
+100000eb0:	55 	pushq	%rbp
+100000eb1:	48 89 e5 	movq	%rsp, %rbp
+100000eb4:	48 83 ec 20 	subq	$32, %rsp
+100000eb8:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000ebc:	48 8b 7d f8 	movq	-8(%rbp), %rdi
+100000ec0:	e8 3b 00 00 00 	callq	59 <__ZNSt3__117__compressed_pairINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5__repES5_E5firstEv>
+100000ec5:	48 89 45 f0 	movq	%rax, -16(%rbp)
+100000ec9:	c7 45 ec 00 00 00 00 	movl	$0, -20(%rbp)
+100000ed0:	83 7d ec 03 	cmpl	$3, -20(%rbp)
+100000ed4:	0f 83 1f 00 00 00 	jae	31 <__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__zeroEv+0x49>
+100000eda:	48 8b 45 f0 	movq	-16(%rbp), %rax
+100000ede:	8b 4d ec 	movl	-20(%rbp), %ecx
+100000ee1:	89 ca 	movl	%ecx, %edx
+100000ee3:	48 c7 04 d0 00 00 00 00 	movq	$0, (%rax,%rdx,8)
+100000eeb:	8b 45 ec 	movl	-20(%rbp), %eax
+100000eee:	83 c0 01 	addl	$1, %eax
+100000ef1:	89 45 ec 	movl	%eax, -20(%rbp)
+100000ef4:	e9 d7 ff ff ff 	jmp	-41 <__ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__zeroEv+0x20>
+100000ef9:	48 83 c4 20 	addq	$32, %rsp
+100000efd:	5d 	popq	%rbp
+100000efe:	c3 	retq
+100000eff:	90 	nop
+
+__ZNSt3__117__compressed_pairINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5__repES5_E5firstEv:
+100000f00:	55 	pushq	%rbp
+100000f01:	48 89 e5 	movq	%rsp, %rbp
+100000f04:	48 83 ec 10 	subq	$16, %rsp
+100000f08:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000f0c:	48 8b 7d f8 	movq	-8(%rbp), %rdi
+100000f10:	e8 0b 00 00 00 	callq	11 <__ZNSt3__122__compressed_pair_elemINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5__repELi0ELb0EE5__getEv>
+100000f15:	48 83 c4 10 	addq	$16, %rsp
+100000f19:	5d 	popq	%rbp
+100000f1a:	c3 	retq
+100000f1b:	0f 1f 44 00 00 	nopl	(%rax,%rax)
+
+__ZNSt3__122__compressed_pair_elemINS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5__repELi0ELb0EE5__getEv:
+100000f20:	55 	pushq	%rbp
+100000f21:	48 89 e5 	movq	%rsp, %rbp
+100000f24:	48 89 7d f8 	movq	%rdi, -8(%rbp)
+100000f28:	48 8b 45 f8 	movq	-8(%rbp), %rax
+100000f2c:	5d 	popq	%rbp
+100000f2d:	c3 	retq
+Disassembly of section __TEXT,__stubs:
+__stubs:
+100000f2e:	ff 25 e4 00 00 00 	jmpq	*228(%rip)
+100000f34:	ff 25 e6 00 00 00 	jmpq	*230(%rip)
+100000f3a:	ff 25 e8 00 00 00 	jmpq	*232(%rip)
+100000f40:	ff 25 ea 00 00 00 	jmpq	*234(%rip)
+Disassembly of section __TEXT,__stub_helper:
+__stub_helper:
+100000f48:	4c 8d 1d b9 00 00 00 	leaq	185(%rip), %r11
+100000f4f:	41 53 	pushq	%r11
+100000f51:	ff 25 a9 00 00 00 	jmpq	*169(%rip)
+100000f57:	90 	nop
+100000f58:	68 16 00 00 00 	pushq	$22
+100000f5d:	e9 e6 ff ff ff 	jmp	-26 <__stub_helper>
+100000f62:	68 68 00 00 00 	pushq	$104
+100000f67:	e9 dc ff ff ff 	jmp	-36 <__stub_helper>
+100000f6c:	68 b3 00 00 00 	pushq	$179
+100000f71:	e9 d2 ff ff ff 	jmp	-46 <__stub_helper>
+100000f76:	68 00 00 00 00 	pushq	$0
+100000f7b:	e9 c8 ff ff ff 	jmp	-56 <__stub_helper>
+Disassembly of section __TEXT,__gcc_except_tab:
+GCC_except_table0:
+100000f80:	ff ff  <unknown>
+100000f82:	01 0c 00 	addl	%ecx, (%rax,%rax)
+100000f85:	32 00 	xorb	(%rax), %al
+100000f87:	00 32 	addb	%dh, (%rdx)
+100000f89:	14 5e 	adcb	$94, %al
+100000f8b:	00 46 35 	addb	%al, 53(%rsi)
+100000f8e:	00 00 	addb	%al, (%rax)
+Disassembly of section __TEXT,__cstring:
+__cstring:
+100000f90:	48 65 	gs
+100000f92:	6c 	insb	%dx, %es:(%rdi)
+100000f93:	6c 	insb	%dx, %es:(%rdi)
+100000f94:	6f 	outsl	(%rsi), %dx
+100000f95:	2c 20 	subb	$32, %al
+100000f97:	00 21 	addb	%ah, (%rcx)
+100000f99:	00  <unknown>
+Disassembly of section __TEXT,__unwind_info:
+__unwind_info:
+100000f9c:	01 00 	addl	%eax, (%rax)
+100000f9e:	00 00 	addb	%al, (%rax)
+100000fa0:	1c 00 	sbbb	$0, %al
+100000fa2:	00 00 	addb	%al, (%rax)
+100000fa4:	01 00 	addl	%eax, (%rax)
+100000fa6:	00 00 	addb	%al, (%rax)
+100000fa8:	20 00 	andb	%al, (%rax)
+100000faa:	00 00 	addb	%al, (%rax)
+100000fac:	01 00 	addl	%eax, (%rax)
+100000fae:	00 00 	addb	%al, (%rax)
+100000fb0:	24 00 	andb	$0, %al
+100000fb2:	00 00 	addb	%al, (%rax)
+100000fb4:	02 00 	addb	(%rax), %al
+100000fb6:	00 00 	addb	%al, (%rax)
+100000fb8:	00 00 	addb	%al, (%rax)
+100000fba:	00 01 	addb	%al, (%rcx)
+100000fbc:	10 10 	adcb	%dl, (%rax)
+100000fbe:	00 00 	addb	%al, (%rax)
+100000fc0:	30 0d 00 00 44 00 	xorb	%cl, 4456448(%rip)
+100000fc6:	00 00 	addb	%al, (%rax)
+100000fc8:	3c 00 	cmpb	$0, %al
+100000fca:	00 00 	addb	%al, (%rax)
+100000fcc:	2f  <unknown>
+100000fcd:	0f 00 00 	sldtw	(%rax)
+100000fd0:	00 00 	addb	%al, (%rax)
+100000fd2:	00 00 	addb	%al, (%rax)
+100000fd4:	44 00 00 	addb	%r8b, (%rax)
+100000fd7:	00 40 0d 	addb	%al, 13(%rax)
+100000fda:	00 00 	addb	%al, (%rax)
+100000fdc:	80 0f 00 	orb	$0, (%rdi)
+100000fdf:	00 03 	addb	%al, (%rbx)
+100000fe1:	00 00 	addb	%al, (%rax)
+100000fe3:	00 0c 00 	addb	%cl, (%rax,%rax)
+100000fe6:	03 00 	addl	(%rax), %eax
+100000fe8:	18 00 	sbbb	%al, (%rax)
+100000fea:	01 00 	addl	%eax, (%rax)
+100000fec:	00 00 	addb	%al, (%rax)
+100000fee:	00 00 	addb	%al, (%rax)
+100000ff0:	10 00 	adcb	%al, (%rax)
+100000ff2:	00 01 	addb	%al, (%rcx)
+100000ff4:	90 	nop
+100000ff5:	00 00 	addb	%al, (%rax)
+100000ff7:	00 00 	addb	%al, (%rax)
+100000ff9:	00 00 	addb	%al, (%rax)
+100000ffb:	51 	pushq	%rcx
+Disassembly of section __DATA,__nl_symbol_ptr:
+__nl_symbol_ptr:
+100001000:	00 00 	addb	%al, (%rax)
+100001002:	00 00 	addb	%al, (%rax)
+100001004:	00 00 	addb	%al, (%rax)
+100001006:	00 00 	addb	%al, (%rax)
+100001008:	00 00 	addb	%al, (%rax)
+10000100a:	00 00 	addb	%al, (%rax)
+10000100c:	00 00 	addb	%al, (%rax)
+10000100e:	00 00 	addb	%al, (%rax)
+Disassembly of section __DATA,__got:
+__got:
+100001010:	00 00 	addb	%al, (%rax)
+100001012:	00 00 	addb	%al, (%rax)
+100001014:	00 00 	addb	%al, (%rax)
+100001016:	00 00 	addb	%al, (%rax)
+Disassembly of section __DATA,__la_symbol_ptr:
+__la_symbol_ptr:
+100001018:	76 0f 	jbe	15 <__la_symbol_ptr+0x11>
+10000101a:	00 00 	addb	%al, (%rax)
+10000101c:	01 00 	addl	%eax, (%rax)
+10000101e:	00 00 	addb	%al, (%rax)
+100001020:	58 	popq	%rax
+100001021:	0f 00 00 	sldtw	(%rax)
+100001024:	01 00 	addl	%eax, (%rax)
+100001026:	00 00 	addb	%al, (%rax)
+100001028:	62  <unknown>
+100001029:	0f 00 00 	sldtw	(%rax)
+10000102c:	01 00 	addl	%eax, (%rax)
+10000102e:	00 00 	addb	%al, (%rax)
+100001030:	6c 	insb	%dx, %es:(%rdi)
+100001031:	0f 00 00 	sldtw	(%rax)
+100001034:	01 00 	addl	%eax, (%rax)
+100001036:	00 00 	addb	%al, (%rax)
