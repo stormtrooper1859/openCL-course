@@ -3,4 +3,4 @@ project(temp1)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(temp1 main.cpp lib.h lib.cpp)
+add_executable(temp1 main.c lib.h lib.cpp)

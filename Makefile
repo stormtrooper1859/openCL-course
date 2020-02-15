@@ -1,14 +1,14 @@
 .PHONY: clean
 
-CXXFLAGS= --std=c++11 -Xpreprocessor -fopenmp -lomp
+CXXFLAGS= --std=c99 -Xpreprocessor -fopenmp -lomp
 
 all: hello
 
 hello: main.o
-	g++ main.o -o hello $(CXXFLAGS)
+	gcc main.o -o hello $(CXXFLAGS)
 
-main.o: main.cpp
-	g++ -c main.cpp $(CXXFLAGS)
+main.o: main.c
+	gcc -c main.c $(CXXFLAGS)
 
 clean:
 	rm -f *.o hello
