@@ -4,9 +4,9 @@
 #include <sys/time.h>
 
 int main() {
-    const int n = 500;
-    const int m = 600;
-    const int p = 700;
+    const int n = 900;
+    const int m = 1000;
+    const int p = 1100;
 
     float* matrix1 = (float*)malloc(n * m * sizeof(float));
     float* matrix2 = (float*)malloc(m * p * sizeof(float));
