@@ -25,9 +25,9 @@ int main() {
         high = num;
         int step = number_of_threads * 2;
 
-//#pragma omp for
-//        for (int i = 3; i <= high; i += 2) {
-        for (int i = low; i <= high; i += step) {
+#pragma omp for schedule(dynamic, 10)
+        for (int i = 3; i <= high; i += 2) {
+//        for (int i = low; i <= high; i += step) {
             int prime = 1;
             for (int t = 3; t * t <= i; t += 2) {
                 if (i % t == 0) {
