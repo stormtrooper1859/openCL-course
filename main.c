@@ -16,6 +16,7 @@ int main() {
 
 #pragma omp parallel
     {
+        int answ3 = 0;
         int thread_number = omp_get_thread_num();
         int number_of_threads = omp_get_num_threads();
         int low, high;
@@ -24,8 +25,9 @@ int main() {
         high = num;
         int step = number_of_threads * 2;
 
-#pragma omp for
-        for (int i = 3; i <= high; i += 2) {
+//#pragma omp for
+//        for (int i = 3; i <= high; i += 2) {
+        for (int i = low; i <= high; i += step) {
             int prime = 1;
             for (int t = 3; t * t <= i; t += 2) {
                 if (i % t == 0) {
@@ -34,10 +36,13 @@ int main() {
                 }
             }
             if (prime) {
-#pragma omp atomic
-                answ2++;
+//#pragma omp atomic
+                answ3++;
             }
         }
+
+#pragma omp critical
+        answ2+=answ3;
     }
 
     for(int i = 0; i<100; i++) answ2+=answ[i];

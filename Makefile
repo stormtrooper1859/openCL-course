@@ -3,16 +3,13 @@
 CXXFLAGS= --std=c99 -lomp
 OMPFLAGS= -Xpreprocessor -fopenmp
 
-all: hello
+all: mp wo
 
 wo: main.c
 	gcc main.c -o wo $(CXXFLAGS)
 
-hello: main.o
-	gcc main.o -o hello $(CXXFLAGS) $(OMPFLAGS)
-
-main.o: main.c
-	gcc -c main.c $(CXXFLAGS) $(OMPFLAGS)
+mp: main.c
+	gcc main.c -o mp $(CXXFLAGS) $(OMPFLAGS)
 
 clean:
-	rm -f *.o hello
+	rm -f *.o wo mp
