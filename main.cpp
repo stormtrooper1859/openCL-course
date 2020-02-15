@@ -1,10 +1,11 @@
-#include <iostream>
-
-#include "lib.h"
+#include <stdio.h>
 
 int main() {
-    std::string name = "alex";
-    std::cout << hello(name) << std::endl;
+
+#pragma omp parallel
+    {
+        printf("Hello, world!\n");
+    }
 
     return 0;
 }
