@@ -13,6 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="368c75d2-1d00-41a9-a55e-7c0b70d1eff6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,6 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectId" id="1RngL95xKo8fLI1bQou4s5xiBtj" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
@@ -79,7 +81,7 @@
       <workItem from="1578561871079" duration="3000" />
       <workItem from="1581764655366" duration="11285000" />
       <workItem from="1581797766184" duration="3000" />
-      <workItem from="1582360758649" duration="1214000" />
+      <workItem from="1582360758649" duration="4141000" />
     </task>
     <servers />
   </component>

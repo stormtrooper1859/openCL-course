@@ -14,10 +14,48 @@ void printMatrix(float* matrix, int n, int m){
     printf("-----\n");
 }
 
+
+const size_t maxsize = 1000;
+
 int main() {
-    const int n = 900;
-    const int m = 1000;
-    const int p = 1100;
+    cl_uint platform_nums = -1;
+    int response01 = clGetPlatformIDs(0, NULL, &platform_nums);
+    cl_platform_id* platforms = (cl_platform_id*)malloc(platform_nums * sizeof(cl_platform_id));
+    int response1 = clGetPlatformIDs(maxsize, platforms, &platform_nums);
+    printf("Platforms: %d %d\n", response1, platform_nums);
+
+    if (platform_nums <= 0) {
+        printf("Platforms not founds\n");
+        return 1;
+    }
+
+    cl_uint deviceNums = -1;
+    int response02 = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_ALL, 0, NULL, &deviceNums);
+    cl_device_id* deviceIds = (cl_device_id*)malloc(deviceNums * sizeof(cl_device_id));
+    int response2 = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_ALL, maxsize, deviceIds, &deviceNums);
+    printf("Devices: %d %d\n", response2, deviceNums);
+
+    if (deviceNums <= 0) {
+        printf("Devices not founds\n");
+        return 1;
+    }
+
+    for (int i = 0; i < deviceNums; i++) {
+
+        size_t clDeviceNameSize = -1;
+        int response03 = clGetDeviceInfo(deviceIds[i], CL_DEVICE_NAME, 0, NULL, &clDeviceNameSize);
+        char* clDeviceName = (char*)malloc(clDeviceNameSize * sizeof(char));
+        int response3 = clGetDeviceInfo(deviceIds[i], CL_DEVICE_NAME, maxsize, clDeviceName, &clDeviceNameSize);
+        printf("Device %d: %d %s\n", i, response3, clDeviceName);
+    }
+
+
+
+    return 0;
+
+    const int n = 10;
+    const int m = 20;
+    const int p = 30;
 
     float* matrix1 = (float*)malloc(n * m * sizeof(float));
     float* matrix2 = (float*)malloc(m * p * sizeof(float));
@@ -35,7 +73,6 @@ int main() {
     gettimeofday(&start, NULL);
 
 
-    clGetDeviceIDs(0, 0, 0, 0, 0);
 
 
 
