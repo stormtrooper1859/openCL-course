@@ -81,14 +81,19 @@ int main() {
         perror("Error while opening the file.\n");
         exit(EXIT_FAILURE);
     }
-    char* program = (char*)malloc( 10000 * sizeof(char));
+
+    fseek(fp, 0L, SEEK_END);
+    size_t fileSize = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+//    fileSize++;
+    char* program = (char*)malloc( fileSize * sizeof(char));
     char ch = 0;
     int index = 0;
     while((ch = fgetc(fp)) != EOF) {
         program[index++] = ch;
     }
-    index++;
     program[index] = 0;
+    index++;
     fclose(fp);
 //    printf("%s\n", program);
 
@@ -113,6 +118,102 @@ int main() {
     char* buildInfoLog = (char*)malloc(clBuildInfoLogSize * sizeof(char));
     clGetProgramBuildInfo(clProg, deviceIds[0], CL_PROGRAM_BUILD_LOG, clBuildInfoLogSize, buildInfoLog, &clBuildInfoLogSize);
     printf("Compiler response: %s\n", buildInfoLog);
+
+
+    const char add[] = "add";
+    errCode = 0;
+    cl_kernel kernel = clCreateKernel(clProg, add, &errCode);
+    printf("Kernel errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+
+
+    cl_mem buffer1 = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(int*), NULL, &errCode);
+    printf("Buffer1 errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+    cl_mem buffer2 = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(int*), NULL, &errCode);
+    printf("Buffer2 errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+    cl_mem buffer3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(int*), NULL, &errCode);
+    printf("Buffer3 errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+
+    int a = 1;
+    int b = 2;
+    errCode = clEnqueueWriteBuffer(commandQueue, buffer1, 0, 0, sizeof(int*), &a, 0, 0, 0);
+    printf("Enqueue buffer1 errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+    errCode = clEnqueueWriteBuffer(commandQueue, buffer2, 0, 0, sizeof(int*), &b, 0, 0, 0);
+    printf("Enqueue buffer2 errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+
+
+    errCode = clSetKernelArg(kernel, 0, sizeof(cl_mem), &buffer1);
+    printf("Set arg1 errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+    errCode = clSetKernelArg(kernel, 1, sizeof(cl_mem), &buffer2);
+    printf("Set arg2 errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+    errCode = clSetKernelArg(kernel, 2, sizeof(cl_mem), &buffer3);
+    printf("Set arg3 errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+
+
+
+    cl_event event;
+    size_t one = 1;
+    errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 1, 0, &one, 0, 0, 0, &event);
+    printf("clEnqueueNDRangeKernel errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+
+    int c = -1;
+    errCode = clEnqueueReadBuffer(commandQueue, buffer3, 1, 0, sizeof(int*), &c, 0, 0, 0);
+    printf("Enqueue read buffer errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+
+    printf("Result: %d\n", c);
+
+    cl_ulong begin;
+    cl_ulong end;
+    size_t tmp;
+    errCode = clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_START, sizeof(begin), &begin, &tmp);
+    printf("clGetEventProfilingInfo1 errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+    errCode = clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_END, sizeof(end), &end, &tmp);
+    printf("clGetEventProfilingInfo2 errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+
+    printf("Time: %lld\n", end - begin);
+
+
+
+
+// getProfilerInfo
 
 
     return 0;
