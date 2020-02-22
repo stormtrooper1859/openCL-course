@@ -1,6 +1,6 @@
 .PHONY: clean
 
-CXXFLAGS= --std=c99 -lomp -O2
+CXXFLAGS= --std=c99 -lomp -O2 -framework OpenCL
 OMPFLAGS= -Xpreprocessor -fopenmp
 
 all: mp wo

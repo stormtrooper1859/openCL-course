@@ -2,6 +2,7 @@
 #include <omp.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include <OpenCL/opencl.h>
 
 void printMatrix(float* matrix, int n, int m){
     for(int i = 0; i < n; i++){
@@ -32,6 +33,12 @@ int main() {
 
     struct timeval stop, start;
     gettimeofday(&start, NULL);
+
+
+    clGetDeviceIDs(0, 0, 0, 0, 0);
+
+
+
 
 
 //    printMatrix(matrix2, m, p);
