@@ -14,9 +14,9 @@ void printMatrix(float* matrix, int n, int m){
 }
 
 int main() {
-    const int n = 1000;
-    const int m = 1100;
-    const int p = 1200;
+    const int n = 900;
+    const int m = 1000;
+    const int p = 1100;
 
     float* matrix1 = (float*)malloc(n * m * sizeof(float));
     float* matrix2 = (float*)malloc(m * p * sizeof(float));
@@ -43,14 +43,14 @@ int main() {
 //        int prev = n2 * m + n1;
 //
 ////        for(int j = i + 1; j < p; j++){
-//            if(prev <= i){
+//            if(n1 > n2){
 //                float temp = matrix2[i];
 //                matrix2[i] = matrix2[prev];
 //                matrix2[prev] = temp;
 //            }
 ////        }
 //    }
-//
+
 
     for(int i = 0; i < m; i++){
         for(int j = 0; j < p; j++){
@@ -58,22 +58,22 @@ int main() {
         }
     }
 
-//    printMatrix(matrix21, p, m);
+//    printMatrix(matrix2, p, m);
 
 #pragma omp parallel
     {
 
-#pragma omp for
+#pragma omp for schedule(static, 1)
         for(int i2 = 0; i2 < n * p; i2++){
             int j = i2 % p;
 
             float tt = 0;
-            float* cur_matrix0 = matrix1 + i2 - j;
-            float* cur_matrix1 = matrix21 + m * j;
+//            float* cur_matrix0 = matrix1 + i2 - j;
+//            float* cur_matrix1 = matrix21 + m * j;
             for(int k = 0; k < m; k++){
-                tt += cur_matrix0[k] * cur_matrix1[k];
-//                int in2 = k + m * j;
-//                tt += matrix1[i2 - j + k] * matrix21[in2];
+//                tt += cur_matrix0[k] * cur_matrix1[k];
+                int in2 = k + m * j;
+                tt += matrix1[i2 - j + k] * matrix21[in2];
 //                int in2 = k * p + j;
 //                tt += matrix1[i2 - j + k] * matrix2[in2];
             }

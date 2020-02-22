@@ -57,18 +57,18 @@ include CMakeFiles/temp1.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/temp1.dir/flags.make
 
-CMakeFiles/temp1.dir/main.cpp.o: CMakeFiles/temp1.dir/flags.make
-CMakeFiles/temp1.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/aleosi/CLionProjects/temp1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/temp1.dir/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/temp1.dir/main.cpp.o -c /Users/aleosi/CLionProjects/temp1/main.cpp
+CMakeFiles/temp1.dir/main.c.o: CMakeFiles/temp1.dir/flags.make
+CMakeFiles/temp1.dir/main.c.o: ../main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/aleosi/CLionProjects/temp1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/temp1.dir/main.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/temp1.dir/main.c.o   -c /Users/aleosi/CLionProjects/temp1/main.c
 
-CMakeFiles/temp1.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/temp1.dir/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/aleosi/CLionProjects/temp1/main.cpp > CMakeFiles/temp1.dir/main.cpp.i
+CMakeFiles/temp1.dir/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/temp1.dir/main.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/aleosi/CLionProjects/temp1/main.c > CMakeFiles/temp1.dir/main.c.i
 
-CMakeFiles/temp1.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/temp1.dir/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/aleosi/CLionProjects/temp1/main.cpp -o CMakeFiles/temp1.dir/main.cpp.s
+CMakeFiles/temp1.dir/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/temp1.dir/main.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/aleosi/CLionProjects/temp1/main.c -o CMakeFiles/temp1.dir/main.c.s
 
 CMakeFiles/temp1.dir/lib.cpp.o: CMakeFiles/temp1.dir/flags.make
 CMakeFiles/temp1.dir/lib.cpp.o: ../lib.cpp
@@ -85,13 +85,13 @@ CMakeFiles/temp1.dir/lib.cpp.s: cmake_force
 
 # Object files for target temp1
 temp1_OBJECTS = \
-"CMakeFiles/temp1.dir/main.cpp.o" \
+"CMakeFiles/temp1.dir/main.c.o" \
 "CMakeFiles/temp1.dir/lib.cpp.o"
 
 # External object files for target temp1
 temp1_EXTERNAL_OBJECTS =
 
-temp1: CMakeFiles/temp1.dir/main.cpp.o
+temp1: CMakeFiles/temp1.dir/main.c.o
 temp1: CMakeFiles/temp1.dir/lib.cpp.o
 temp1: CMakeFiles/temp1.dir/build.make
 temp1: CMakeFiles/temp1.dir/link.txt

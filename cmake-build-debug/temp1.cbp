@@ -86,7 +86,7 @@
 		<Unit filename="/Users/aleosi/CLionProjects/temp1/lib.h">
 			<Option target="temp1"/>
 		</Unit>
-		<Unit filename="/Users/aleosi/CLionProjects/temp1/main.cpp">
+		<Unit filename="/Users/aleosi/CLionProjects/temp1/main.c">
 			<Option target="temp1"/>
 		</Unit>
 		<Unit filename="/Users/aleosi/CLionProjects/temp1/CMakeLists.txt">
