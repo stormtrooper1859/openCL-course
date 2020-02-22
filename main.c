@@ -16,6 +16,7 @@ void printMatrix(float* matrix, int n, int m){
 
 
 const size_t maxsize = 1000;
+//char program[50000];
 
 int main() {
     cl_uint platform_nums = -1;
@@ -28,6 +29,13 @@ int main() {
         printf("Platforms not founds\n");
         return 1;
     }
+
+    size_t clPlatformNameSize = -1;
+    int response031 = clGetPlatformInfo(platforms[0], CL_PLATFORM_NAME, 0, NULL, &clPlatformNameSize);
+    char* clPlatformName = (char*)malloc(clPlatformNameSize * sizeof(char));
+    int response31 = clGetPlatformInfo(platforms[0], CL_PLATFORM_NAME, maxsize, clPlatformName, &clPlatformNameSize);
+    printf("Platform %d: %d %s\n", 0, response31, clPlatformName);
+
 
     cl_uint deviceNums = -1;
     int response02 = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_ALL, 0, NULL, &deviceNums);
@@ -49,6 +57,62 @@ int main() {
         printf("Device %d: %d %s\n", i, response3, clDeviceName);
     }
 
+    size_t deviceNum = 1;
+
+
+    cl_int errCode = -1;
+    cl_context context = clCreateContext(0, 1, deviceIds, NULL, NULL, &errCode);
+    printf("Context errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+
+    errCode = -1;
+    cl_command_queue commandQueue = clCreateCommandQueue(context, deviceIds[0], CL_QUEUE_PROFILING_ENABLE, &errCode);
+    printf("CommandQueue errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+
+
+    // TODO сделать нормальное чтение
+    FILE* fp = fopen("./program.cl", "r");
+    if (fp == NULL) {
+        perror("Error while opening the file.\n");
+        exit(EXIT_FAILURE);
+    }
+    char* program = (char*)malloc( 10000 * sizeof(char));
+    char ch = 0;
+    int index = 0;
+    while((ch = fgetc(fp)) != EOF) {
+        program[index++] = ch;
+    }
+    index++;
+    program[index] = 0;
+    fclose(fp);
+//    printf("%s\n", program);
+
+
+
+    errCode = 0;
+    cl_program clProg = clCreateProgramWithSource(context, 1, &program, &index, &errCode);
+    printf("CreateProgramWithSource errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+
+//    printf("OK\n");
+    errCode = clBuildProgram(clProg, 1, deviceIds, NULL, NULL, NULL);
+    printf("BuildProgram errCode %d\n", errCode);
+//    if (errCode != 0) {
+//        return 1;
+//    }
+
+    size_t clBuildInfoLogSize = -1;
+    clGetProgramBuildInfo(clProg, deviceIds[0], CL_PROGRAM_BUILD_LOG, 0, NULL, &clBuildInfoLogSize);
+    char* buildInfoLog = (char*)malloc(clBuildInfoLogSize * sizeof(char));
+    clGetProgramBuildInfo(clProg, deviceIds[0], CL_PROGRAM_BUILD_LOG, clBuildInfoLogSize, buildInfoLog, &clBuildInfoLogSize);
+    printf("Compiler response: %s\n", buildInfoLog);
 
 
     return 0;
