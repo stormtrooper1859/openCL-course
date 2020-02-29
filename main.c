@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <OpenCL/opencl.h>
+#include <math.h>
 
 void printMatrix(float *matrix, int n, int m) {
     for (int i = 0; i < n; i++) {
@@ -16,6 +17,7 @@ void printMatrix(float *matrix, int n, int m) {
 
 
 const size_t maxsize = 1000;
+const int numOfDevice = 0;
 //char program[50000];
 
 int main() {
@@ -58,13 +60,13 @@ int main() {
 
 //    size_t deviceNum = 1;
 
-    cl_context context = clCreateContext(0, 1, deviceIds, NULL, NULL, &errCode);
+    cl_context context = clCreateContext(0, 1, deviceIds + numOfDevice, NULL, NULL, &errCode);
     printf("Context errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
 
-    cl_command_queue commandQueue = clCreateCommandQueue(context, deviceIds[0], CL_QUEUE_PROFILING_ENABLE, &errCode);
+    cl_command_queue commandQueue = clCreateCommandQueue(context, deviceIds[numOfDevice], CL_QUEUE_PROFILING_ENABLE, &errCode);
     printf("CommandQueue errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
@@ -99,16 +101,16 @@ int main() {
         return 1;
     }
 
-    errCode = clBuildProgram(clProg, 1, deviceIds, NULL, NULL, NULL);
+    errCode = clBuildProgram(clProg, 1, deviceIds + numOfDevice, NULL, NULL, NULL);
     printf("BuildProgram errCode %d\n", errCode);
 //    if (errCode != 0) {
 //        return 1;
 //    }
 
     size_t clBuildInfoLogSize = -1;
-    clGetProgramBuildInfo(clProg, deviceIds[0], CL_PROGRAM_BUILD_LOG, 0, NULL, &clBuildInfoLogSize);
+    clGetProgramBuildInfo(clProg, deviceIds[numOfDevice], CL_PROGRAM_BUILD_LOG, 0, NULL, &clBuildInfoLogSize);
     char *buildInfoLog = (char *) malloc(clBuildInfoLogSize * sizeof(char));
-    clGetProgramBuildInfo(clProg, deviceIds[0], CL_PROGRAM_BUILD_LOG, clBuildInfoLogSize, buildInfoLog,
+    clGetProgramBuildInfo(clProg, deviceIds[numOfDevice], CL_PROGRAM_BUILD_LOG, clBuildInfoLogSize, buildInfoLog,
                           &clBuildInfoLogSize);
     printf("Compiler response: %s\n", buildInfoLog);
 
@@ -139,14 +141,15 @@ int main() {
 //    }
 
 
-    const int n = 900;
-    const int m = 1000;
-    const int p = 1100;
+    const int n = 2000;
+    const int m = 2100;
+    const int p = 2200;
 
     float *matrix1 = (float *) malloc(n * m * sizeof(float));
     float *matrix2 = (float *) malloc(m * p * sizeof(float));
     float *matrix21 = (float *) malloc(m * p * sizeof(float));
     float *matrix3 = (float *) malloc(n * p * sizeof(float));
+    float *matrix31 = (float *) malloc(n * p * sizeof(float));
 
     for (int i = 0; i < n * m; i++) {
         matrix1[i] = i;
@@ -263,7 +266,51 @@ int main() {
         return 1;
     }
 
-    printf("Time: %lld\n", end - begin);
+    printf("Time: %lldms\n", (end - begin) / 1000000);
+
+
+
+    printf("comparing...\n");
+
+    struct timeval stop, start;
+    gettimeofday(&start, NULL);
+
+#pragma omp parallel
+    {
+
+#pragma omp for schedule(static, 1)
+        for (int i2 = 0; i2 < n * p; i2++) {
+            int j = i2 % p;
+
+            float tt = 0;
+            for (int k = 0; k < m; k++) {
+                int in2 = k + m * j;
+                tt += matrix1[i2 - j + k] * matrix21[in2];
+            }
+            matrix31[i2] = tt;
+        }
+    }
+
+    int res = 0;
+    for (int i = 0; i < n * p; i++) {
+        if (abs(matrix31[i] - matrix3[i]) >= 0.00001 * ((matrix31[i] > matrix3[i]) ? matrix31[i] : matrix3[i])) {
+//            printf("someshit: %14.6f %14.6f\n", matrix3[i], matrix31[i]);
+            res = -1;
+            break;
+        }
+    }
+
+    gettimeofday(&stop, NULL);
+    long long int tt = ((stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec) / 1000;
+
+    printf("someshit: %5.0f\n", matrix3[0]);
+
+
+    printf("Result of comparing: %d\n", res);
+    printf("time: %lld ms\n", tt);
+
+
+
 
     return 0;
 
