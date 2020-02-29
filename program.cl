@@ -4,7 +4,7 @@ kernel void add(global const float *a, global const float *b, global float *c, u
 
     float temp = 0;
     for (uint k = 0; k < m; k++) {
-        temp += a[id0 * p + k] * b[m * id1 + k];
+        temp += a[id0 * m + k] * b[id1 * m + k];
     }
     c[id0 * p + id1] = temp;
 }

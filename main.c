@@ -228,8 +228,10 @@ int main() {
     cl_event event;
 //    size_t aaa = arrLen;
     size_t* dimSize[2] = {n, p};
+    size_t* zero[2] = {0, 0};
+//    int zero = 0;
 //    size_t one = 1;
-    errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 2, 0, dimSize, 0, 0, 0, &event);
+    errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 2, zero, dimSize, 0, 0, 0, &event);
     printf("clEnqueueNDRangeKernel errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
@@ -269,6 +271,29 @@ int main() {
     printf("Time: %lldms\n", (end - begin) / 1000000);
 
 
+    errCode = clReleaseKernel(kernel);
+    printf("Release kernel errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+    errCode = clReleaseProgram(clProg);
+    printf("Release program errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+    errCode = clReleaseCommandQueue(commandQueue);
+    printf("Release commandQueue errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+    errCode = clReleaseContext(context);
+    printf("Release context errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+
+
+
 
     printf("comparing...\n");
 
@@ -279,16 +304,48 @@ int main() {
     {
 
 #pragma omp for schedule(static, 1)
-        for (int i2 = 0; i2 < n * p; i2++) {
-            int j = i2 % p;
-
-            float tt = 0;
-            for (int k = 0; k < m; k++) {
-                int in2 = k + m * j;
-                tt += matrix1[i2 - j + k] * matrix21[in2];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < p; j++) {
+                float tt = 0;
+                for (int k = 0; k < m; k++) {
+//                    if(i * m + k >= n * m || i * m + k < 0 || j * m + k >= m * p || j * m + k < 0){
+//                        printf("Error %d %d %d\n", i, j, k);
+//                        exit(1);
+//                    }
+                    tt += matrix1[i * m + k] * matrix21[j * m + k];
+                }
+                matrix31[i * p + j] = tt;
             }
-            matrix31[i2] = tt;
         }
+
+//#pragma omp for schedule(static, 1)
+//        for (int i = 0; i < n; i++) {
+//            for (int j = 0; j < p; j++) {
+//                float tt = 0;
+//                for (int k = 0; k < m; k++) {
+//                    tt += matrix1[i * m + k] * matrix2[j + k * p];
+//                }
+//                matrix3[i * p + j] = tt;
+//            }
+//        }
+
+
+//        for (int i2 = 0; i2 < n * p; i2++) {
+//            int j = i2 % p;
+//
+//            float tt = 0;
+//            for (int k = 0; k < m; k++) {
+//                int in2 = (i2 / p) * m - j + k;
+//                if(i2 - j + k >= n * m || i2 - j + k < 0 || in2 >= m * p || in2 < 0){
+//                    printf("Error %d %d %d\n", i2, j, k);
+//                    exit(1);
+//                }
+//                tt += matrix1[i2 - j + k] * matrix21[in2];
+////                int in2 = k * p + j;
+////                tt += matrix1[i2 - j + k] * matrix2[in2];
+//            }
+//            matrix31[i2] = tt;
+//        }
     }
 
     int res = 0;
@@ -304,7 +361,6 @@ int main() {
     long long int tt = ((stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec) / 1000;
 
     printf("someshit: %5.0f\n", matrix3[0]);
-
 
     printf("Result of comparing: %d\n", res);
     printf("time: %lld ms\n", tt);
