@@ -66,7 +66,8 @@ int main() {
         return 1;
     }
 
-    cl_command_queue commandQueue = clCreateCommandQueue(context, deviceIds[numOfDevice], CL_QUEUE_PROFILING_ENABLE, &errCode);
+    cl_command_queue commandQueue = clCreateCommandQueue(context, deviceIds[numOfDevice], CL_QUEUE_PROFILING_ENABLE,
+                                                         &errCode);
     printf("CommandQueue errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
@@ -165,8 +166,6 @@ int main() {
     }
 
 
-
-
     cl_mem buffer1 = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(int) * n * m, NULL, &errCode);
     printf("Buffer1 errCode %d\n", errCode);
     if (errCode != 0) {
@@ -182,8 +181,6 @@ int main() {
     if (errCode != 0) {
         return 1;
     }
-
-
 
 
     errCode = clEnqueueWriteBuffer(commandQueue, buffer1, 0, 0, sizeof(int) * n * m, matrix1, 0, 0, 0);
@@ -227,8 +224,8 @@ int main() {
 
     cl_event event;
 //    size_t aaa = arrLen;
-    size_t* dimSize[2] = {n, p};
-    size_t* zero[2] = {0, 0};
+    size_t *dimSize[2] = {n, p};
+    size_t *zero[2] = {0, 0};
 //    int zero = 0;
 //    size_t one = 1;
     errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 2, zero, dimSize, 0, 0, 0, &event);
@@ -291,8 +288,6 @@ int main() {
     if (errCode != 0) {
         return 1;
     }
-
-
 
 
     printf("comparing...\n");
@@ -364,8 +359,6 @@ int main() {
 
     printf("Result of comparing: %d\n", res);
     printf("time: %lld ms\n", tt);
-
-
 
 
     return 0;
