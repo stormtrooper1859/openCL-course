@@ -1,3 +1,4 @@
 kernel void add(global const int *a, global const int *b, global int *c) {
-    *c = *a + *b;
+    uint id = get_global_id(0);
+    c[id] = a[id] + b[id];
 }

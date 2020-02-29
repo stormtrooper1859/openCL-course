@@ -122,30 +122,54 @@ int main() {
     }
 
 
-    cl_mem buffer1 = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(int *), NULL, &errCode);
+
+
+
+
+    const size_t arrLen = 100000;
+
+
+
+
+
+    cl_mem buffer1 = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(int) * arrLen, NULL, &errCode);
     printf("Buffer1 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
-    cl_mem buffer2 = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(int *), NULL, &errCode);
+    cl_mem buffer2 = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(int) * arrLen, NULL, &errCode);
     printf("Buffer2 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
-    cl_mem buffer3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(int *), NULL, &errCode);
+    cl_mem buffer3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(int) * arrLen, NULL, &errCode);
     printf("Buffer3 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
 
-    int a = 1;
-    int b = 2;
-    errCode = clEnqueueWriteBuffer(commandQueue, buffer1, 0, 0, sizeof(int *), &a, 0, 0, 0);
+//    int a = 1;
+//    int b = 2;
+
+
+    int *a = (int *) malloc(arrLen * sizeof(int));
+    int *b = (int *) malloc(arrLen * sizeof(int));
+    int *c = (int *) malloc(arrLen * sizeof(int));
+
+    for (int i = 0; i < arrLen; i++) {
+        a[i] = i;
+        b[i] = arrLen + i;
+        c[i] = 0;
+    }
+
+
+
+    errCode = clEnqueueWriteBuffer(commandQueue, buffer1, 0, 0, sizeof(int) * arrLen, a, 0, 0, 0);
     printf("Enqueue buffer1 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
-    errCode = clEnqueueWriteBuffer(commandQueue, buffer2, 0, 0, sizeof(int *), &b, 0, 0, 0);
+    errCode = clEnqueueWriteBuffer(commandQueue, buffer2, 0, 0, sizeof(int) * arrLen, b, 0, 0, 0);
     printf("Enqueue buffer2 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
@@ -170,21 +194,27 @@ int main() {
 
 
     cl_event event;
+//    size_t aaa = arrLen;
     size_t one = 1;
-    errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 1, 0, &one, 0, 0, 0, &event);
+    errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 1, 0, &arrLen, 0, 0, 0, &event);
     printf("clEnqueueNDRangeKernel errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
 
-    int c;
-    errCode = clEnqueueReadBuffer(commandQueue, buffer3, 1, 0, sizeof(int *), &c, 0, 0, 0);
+    errCode = clEnqueueReadBuffer(commandQueue, buffer3, 1, 0, sizeof(int) * arrLen, c, 0, 0, 0);
     printf("Enqueue read buffer errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
 
-    printf("Result: %d\n", c);
+    int rr = 0;
+    for (int i = 0; i < arrLen; i++){
+        rr += c[i];
+    }
+    printf("Result: %d\n", rr);
+
+
 
     cl_ulong begin;
     cl_ulong end;

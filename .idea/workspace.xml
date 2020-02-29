@@ -12,11 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="368c75d2-1d00-41a9-a55e-7c0b70d1eff6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/program.cl" beforeDir="false" afterPath="$PROJECT_DIR$/program.cl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +85,7 @@
       <workItem from="1582360758649" duration="11565000" />
       <workItem from="1582957755940" duration="432000" />
       <workItem from="1582958302968" duration="2000" />
-      <workItem from="1582966494877" duration="143000" />
+      <workItem from="1582966494877" duration="2687000" />
     </task>
     <servers />
   </component>
