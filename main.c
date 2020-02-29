@@ -4,9 +4,9 @@
 #include <sys/time.h>
 #include <OpenCL/opencl.h>
 
-void printMatrix(float* matrix, int n, int m){
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < m; j++){
+void printMatrix(float *matrix, int n, int m) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
             printf("%5.0f ", matrix[i * m + j]);
         }
         printf("\n");
@@ -19,29 +19,29 @@ const size_t maxsize = 1000;
 //char program[50000];
 
 int main() {
-    cl_uint platform_nums = -1;
-    int response01 = clGetPlatformIDs(0, NULL, &platform_nums);
-    cl_platform_id* platforms = (cl_platform_id*)malloc(platform_nums * sizeof(cl_platform_id));
-    int response1 = clGetPlatformIDs(maxsize, platforms, &platform_nums);
-    printf("Platforms: %d %d\n", response1, platform_nums);
+    cl_int errCode = -1;
+    cl_uint platformNums;
+    errCode = clGetPlatformIDs(0, NULL, &platformNums);
+    cl_platform_id *platforms = (cl_platform_id *) malloc(platformNums * sizeof(cl_platform_id));
+    errCode = clGetPlatformIDs(maxsize, platforms, &platformNums);
+    printf("Platforms: %d %d\n", errCode, platformNums);
 
-    if (platform_nums <= 0) {
+    if (platformNums <= 0) {
         printf("Platforms not founds\n");
         return 1;
     }
 
-    size_t clPlatformNameSize = -1;
-    int response031 = clGetPlatformInfo(platforms[0], CL_PLATFORM_NAME, 0, NULL, &clPlatformNameSize);
-    char* clPlatformName = (char*)malloc(clPlatformNameSize * sizeof(char));
-    int response31 = clGetPlatformInfo(platforms[0], CL_PLATFORM_NAME, maxsize, clPlatformName, &clPlatformNameSize);
-    printf("Platform %d: %d %s\n", 0, response31, clPlatformName);
+    size_t clPlatformNameSize;
+    errCode = clGetPlatformInfo(platforms[0], CL_PLATFORM_NAME, 0, NULL, &clPlatformNameSize);
+    char *clPlatformName = (char *) malloc(clPlatformNameSize * sizeof(char));
+    errCode = clGetPlatformInfo(platforms[0], CL_PLATFORM_NAME, maxsize, clPlatformName, &clPlatformNameSize);
+    printf("Platform %d: %d %s\n", 0, errCode, clPlatformName);
 
-
-    cl_uint deviceNums = -1;
-    int response02 = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_ALL, 0, NULL, &deviceNums);
-    cl_device_id* deviceIds = (cl_device_id*)malloc(deviceNums * sizeof(cl_device_id));
-    int response2 = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_ALL, maxsize, deviceIds, &deviceNums);
-    printf("Devices: %d %d\n", response2, deviceNums);
+    cl_uint deviceNums;
+    errCode = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_ALL, 0, NULL, &deviceNums);
+    cl_device_id *deviceIds = (cl_device_id *) malloc(deviceNums * sizeof(cl_device_id));
+    errCode = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_ALL, maxsize, deviceIds, &deviceNums);
+    printf("Devices: %d %d\n", errCode, deviceNums);
 
     if (deviceNums <= 0) {
         printf("Devices not founds\n");
@@ -49,25 +49,21 @@ int main() {
     }
 
     for (int i = 0; i < deviceNums; i++) {
-
         size_t clDeviceNameSize = -1;
-        int response03 = clGetDeviceInfo(deviceIds[i], CL_DEVICE_NAME, 0, NULL, &clDeviceNameSize);
-        char* clDeviceName = (char*)malloc(clDeviceNameSize * sizeof(char));
-        int response3 = clGetDeviceInfo(deviceIds[i], CL_DEVICE_NAME, maxsize, clDeviceName, &clDeviceNameSize);
-        printf("Device %d: %d %s\n", i, response3, clDeviceName);
+        errCode = clGetDeviceInfo(deviceIds[i], CL_DEVICE_NAME, 0, NULL, &clDeviceNameSize);
+        char *clDeviceName = (char *) malloc(clDeviceNameSize * sizeof(char));
+        errCode = clGetDeviceInfo(deviceIds[i], CL_DEVICE_NAME, maxsize, clDeviceName, &clDeviceNameSize);
+        printf("Device %d: %d %s\n", i, errCode, clDeviceName);
     }
 
-    size_t deviceNum = 1;
+//    size_t deviceNum = 1;
 
-
-    cl_int errCode = -1;
     cl_context context = clCreateContext(0, 1, deviceIds, NULL, NULL, &errCode);
     printf("Context errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
 
-    errCode = -1;
     cl_command_queue commandQueue = clCreateCommandQueue(context, deviceIds[0], CL_QUEUE_PROFILING_ENABLE, &errCode);
     printf("CommandQueue errCode %d\n", errCode);
     if (errCode != 0) {
@@ -76,7 +72,7 @@ int main() {
 
 
     // TODO сделать нормальное чтение
-    FILE* fp = fopen("./program.cl", "r");
+    FILE *fp = fopen("./program.cl", "r");
     if (fp == NULL) {
         perror("Error while opening the file.\n");
         exit(EXIT_FAILURE);
@@ -85,11 +81,10 @@ int main() {
     fseek(fp, 0L, SEEK_END);
     size_t fileSize = ftell(fp);
     fseek(fp, 0, SEEK_SET);
-//    fileSize++;
-    char* program = (char*)malloc( fileSize * sizeof(char));
+    char *program = (char *) malloc(fileSize * sizeof(char));
     char ch = 0;
     int index = 0;
-    while((ch = fgetc(fp)) != EOF) {
+    while ((ch = fgetc(fp)) != EOF) {
         program[index++] = ch;
     }
     program[index] = 0;
@@ -98,15 +93,12 @@ int main() {
 //    printf("%s\n", program);
 
 
-
-    errCode = 0;
     cl_program clProg = clCreateProgramWithSource(context, 1, &program, &index, &errCode);
     printf("CreateProgramWithSource errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
 
-//    printf("OK\n");
     errCode = clBuildProgram(clProg, 1, deviceIds, NULL, NULL, NULL);
     printf("BuildProgram errCode %d\n", errCode);
 //    if (errCode != 0) {
@@ -115,8 +107,9 @@ int main() {
 
     size_t clBuildInfoLogSize = -1;
     clGetProgramBuildInfo(clProg, deviceIds[0], CL_PROGRAM_BUILD_LOG, 0, NULL, &clBuildInfoLogSize);
-    char* buildInfoLog = (char*)malloc(clBuildInfoLogSize * sizeof(char));
-    clGetProgramBuildInfo(clProg, deviceIds[0], CL_PROGRAM_BUILD_LOG, clBuildInfoLogSize, buildInfoLog, &clBuildInfoLogSize);
+    char *buildInfoLog = (char *) malloc(clBuildInfoLogSize * sizeof(char));
+    clGetProgramBuildInfo(clProg, deviceIds[0], CL_PROGRAM_BUILD_LOG, clBuildInfoLogSize, buildInfoLog,
+                          &clBuildInfoLogSize);
     printf("Compiler response: %s\n", buildInfoLog);
 
 
@@ -129,17 +122,17 @@ int main() {
     }
 
 
-    cl_mem buffer1 = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(int*), NULL, &errCode);
+    cl_mem buffer1 = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(int *), NULL, &errCode);
     printf("Buffer1 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
-    cl_mem buffer2 = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(int*), NULL, &errCode);
+    cl_mem buffer2 = clCreateBuffer(context, CL_MEM_READ_ONLY, sizeof(int *), NULL, &errCode);
     printf("Buffer2 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
-    cl_mem buffer3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(int*), NULL, &errCode);
+    cl_mem buffer3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY, sizeof(int *), NULL, &errCode);
     printf("Buffer3 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
@@ -147,12 +140,12 @@ int main() {
 
     int a = 1;
     int b = 2;
-    errCode = clEnqueueWriteBuffer(commandQueue, buffer1, 0, 0, sizeof(int*), &a, 0, 0, 0);
+    errCode = clEnqueueWriteBuffer(commandQueue, buffer1, 0, 0, sizeof(int *), &a, 0, 0, 0);
     printf("Enqueue buffer1 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
-    errCode = clEnqueueWriteBuffer(commandQueue, buffer2, 0, 0, sizeof(int*), &b, 0, 0, 0);
+    errCode = clEnqueueWriteBuffer(commandQueue, buffer2, 0, 0, sizeof(int *), &b, 0, 0, 0);
     printf("Enqueue buffer2 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
@@ -176,7 +169,6 @@ int main() {
     }
 
 
-
     cl_event event;
     size_t one = 1;
     errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 1, 0, &one, 0, 0, 0, &event);
@@ -185,8 +177,8 @@ int main() {
         return 1;
     }
 
-    int c = -1;
-    errCode = clEnqueueReadBuffer(commandQueue, buffer3, 1, 0, sizeof(int*), &c, 0, 0, 0);
+    int c;
+    errCode = clEnqueueReadBuffer(commandQueue, buffer3, 1, 0, sizeof(int *), &c, 0, 0, 0);
     printf("Enqueue read buffer errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
@@ -210,27 +202,22 @@ int main() {
 
     printf("Time: %lld\n", end - begin);
 
-
-
-
-// getProfilerInfo
-
-
     return 0;
+
 
     const int n = 10;
     const int m = 20;
     const int p = 30;
 
-    float* matrix1 = (float*)malloc(n * m * sizeof(float));
-    float* matrix2 = (float*)malloc(m * p * sizeof(float));
-    float* matrix21 = (float*)malloc(m * p * sizeof(float));
-    float* matrix3 = (float*)malloc(n * p * sizeof(float));
+    float *matrix1 = (float *) malloc(n * m * sizeof(float));
+    float *matrix2 = (float *) malloc(m * p * sizeof(float));
+    float *matrix21 = (float *) malloc(m * p * sizeof(float));
+    float *matrix3 = (float *) malloc(n * p * sizeof(float));
 
-    for(int i = 0; i < n * m; i++){
+    for (int i = 0; i < n * m; i++) {
         matrix1[i] = i;
     }
-    for(int i = 0; i < m * p; i++){
+    for (int i = 0; i < m * p; i++) {
         matrix2[i] = i + n * m;
     }
 
@@ -261,8 +248,8 @@ int main() {
 //    }
 
 
-    for(int i = 0; i < m; i++){
-        for(int j = 0; j < p; j++){
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < p; j++) {
             matrix21[j * m + i] = matrix2[i * p + j];
         }
     }
@@ -273,13 +260,13 @@ int main() {
     {
 
 #pragma omp for schedule(static, 1)
-        for(int i2 = 0; i2 < n * p; i2++){
+        for (int i2 = 0; i2 < n * p; i2++) {
             int j = i2 % p;
 
             float tt = 0;
 //            float* cur_matrix0 = matrix1 + i2 - j;
 //            float* cur_matrix1 = matrix21 + m * j;
-            for(int k = 0; k < m; k++){
+            for (int k = 0; k < m; k++) {
 //                tt += cur_matrix0[k] * cur_matrix1[k];
                 int in2 = k + m * j;
                 tt += matrix1[i2 - j + k] * matrix21[in2];
