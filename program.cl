@@ -1,4 +1,10 @@
-kernel void add(global const int *a, global const int *b, global int *c) {
-    uint id = get_global_id(0);
-    c[id] = a[id] + b[id];
+kernel void add(global const float *a, global const float *b, global float *c, uint m, uint p) {
+    uint id0 = get_global_id(0);
+    uint id1 = get_global_id(1);
+
+    float temp = 0;
+    for (int k = 0; k < m; k++) {
+        temp += a[id0 * p + k] * b[m * id1 + k];
+    }
+    c[id0 * p + id1] = temp;
 }
