@@ -17,7 +17,7 @@ void printMatrix(float *matrix, int n, int m) {
 
 
 const size_t maxsize = 1000;
-const int numOfDevice = 0;
+const int numOfDevice = 1;
 //char program[50000];
 
 int main() {
@@ -141,9 +141,9 @@ int main() {
 //    }
 
 
-    const int n = 2000;
-    const int m = 2100;
-    const int p = 2200;
+    const int n = 1800;
+    const int m = 4000;
+    const int p = 2400;
 
     float *matrix1 = (float *) malloc(n * m * sizeof(float));
     float *matrix2 = (float *) malloc(m * p * sizeof(float));
