@@ -310,35 +310,6 @@ int main() {
             }
         }
 
-        // вычисления на обычной матрице
-//#pragma omp for schedule(static, 1)
-//        for (int i = 0; i < n; i++) {
-//            for (int j = 0; j < p; j++) {
-//                float tt = 0;
-//                for (int k = 0; k < m; k++) {
-//                    tt += matrix1[i * m + k] * matrix2[j + k * p];
-//                }
-//                matrix3[i * p + j] = tt;
-//            }
-//        }
-
-
-//        for (int i2 = 0; i2 < n * p; i2++) {
-//            int j = i2 % p;
-//
-//            float tt = 0;
-//            for (int k = 0; k < m; k++) {
-//                int in2 = (i2 / p) * m - j + k;
-//                if(i2 - j + k >= n * m || i2 - j + k < 0 || in2 >= m * p || in2 < 0){
-//                    printf("Error %d %d %d\n", i2, j, k);
-//                    exit(1);
-//                }
-//                tt += matrix1[i2 - j + k] * matrix21[in2];
-////                int in2 = k * p + j;
-////                tt += matrix1[i2 - j + k] * matrix2[in2];
-//            }
-//            matrix31[i2] = tt;
-//        }
     }
 
     int res = 0;
