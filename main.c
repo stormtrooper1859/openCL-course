@@ -142,9 +142,12 @@ int main() {
 //    }
 
 
-    const int n = 1024;
-    const int m = 2048;
-    const int p = 1024;
+    const int n = 4;
+    const int m = 4;
+    const int p = 4;
+
+    const sizeX = 2;
+    const sizeY = 2;
 
     float *matrix1 = (float *) malloc(n * m * sizeof(float));
     float *matrix2 = (float *) malloc(m * p * sizeof(float));
@@ -153,11 +156,12 @@ int main() {
     float *matrix31 = (float *) malloc(n * p * sizeof(float));
 
     for (int i = 0; i < n * m; i++) {
-        matrix1[i] = i + i * n * 0.02 + i * m * 0.034;
+//        matrix1[i] = i + i * n * 0.02 + i * m * 0.034;
+        matrix1[i] = i;
     }
     for (int i = 0; i < m * p; i++) {
-        matrix2[i] = i + i * n * 1.87 + i * m * 1.34;
-//        matrix2[i] = i + n * m;
+//        matrix2[i] = i + i * n * 1.87 + i * m * 1.34;
+        matrix2[i] = i + n * m;
     }
 
     for (int i = 0; i < m; i++) {
@@ -227,9 +231,7 @@ int main() {
 //    size_t aaa = arrLen;
     size_t *dimSize[2] = {n, p};
     size_t *zero[2] = {0, 0};
-    size_t *dimLocal[2] = {8, 8};
-//    int zero = 0;
-//    size_t one = 1;
+    size_t *dimLocal[2] = {sizeX, sizeY};
     errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 2, zero, dimSize, dimLocal, 0, 0, &event);
     printf("clEnqueueNDRangeKernel errCode %d\n", errCode);
     if (errCode != 0) {
@@ -316,7 +318,8 @@ int main() {
 
     int res = 0;
     for (int i = 0; i < n * p; i++) {
-        if (abs(matrix31[i] - matrix3[i]) >= 0.00001 * ((matrix31[i] > matrix3[i]) ? matrix31[i] : matrix3[i])) {
+//        if (abs(matrix31[i] - matrix3[i]) >= 0.1 * ((matrix31[i] > matrix3[i]) ? matrix31[i] : matrix3[i])) {
+        if (abs(matrix31[i] - matrix3[i]) >= 000.1) {
 //            printf("someshit: %14.6f %14.6f\n", matrix3[i], matrix31[i]);
             res = -1;
             break;
@@ -330,6 +333,12 @@ int main() {
 
     printf("Result of comparing: %d\n", res);
     printf("time: %lld ms\n", tt);
+
+    printMatrix(matrix1, n, m);
+    printMatrix(matrix2, m, p);
+    printMatrix(matrix3, n, p);
+    printMatrix(matrix31, n, p);
+
 
 
     return 0;
