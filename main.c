@@ -153,10 +153,11 @@ int main() {
     float *matrix31 = (float *) malloc(n * p * sizeof(float));
 
     for (int i = 0; i < n * m; i++) {
-        matrix1[i] = i;
+        matrix1[i] = i + i * n * 0.02 + i * m * 0.034;
     }
     for (int i = 0; i < m * p; i++) {
-        matrix2[i] = i + n * m;
+        matrix2[i] = i + i * n * 1.87 + i * m * 1.34;
+//        matrix2[i] = i + n * m;
     }
 
     for (int i = 0; i < m; i++) {
@@ -226,7 +227,7 @@ int main() {
 //    size_t aaa = arrLen;
     size_t *dimSize[2] = {n, p};
     size_t *zero[2] = {0, 0};
-    size_t *dimLocal[2] = {2, 2};
+    size_t *dimLocal[2] = {8, 8};
 //    int zero = 0;
 //    size_t one = 1;
     errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 2, zero, dimSize, dimLocal, 0, 0, &event);
