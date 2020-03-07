@@ -142,9 +142,9 @@ int main() {
 //    }
 
 
-    const int n = 1800;
-    const int m = 4000;
-    const int p = 2400;
+    const int n = 1024;
+    const int m = 2048;
+    const int p = 1024;
 
     float *matrix1 = (float *) malloc(n * m * sizeof(float));
     float *matrix2 = (float *) malloc(m * p * sizeof(float));
@@ -226,9 +226,10 @@ int main() {
 //    size_t aaa = arrLen;
     size_t *dimSize[2] = {n, p};
     size_t *zero[2] = {0, 0};
+    size_t *dimLocal[2] = {2, 2};
 //    int zero = 0;
 //    size_t one = 1;
-    errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 2, zero, dimSize, 0, 0, 0, &event);
+    errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 2, zero, dimSize, dimLocal, 0, 0, &event);
     printf("clEnqueueNDRangeKernel errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
