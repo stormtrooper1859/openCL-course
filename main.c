@@ -21,9 +21,9 @@ const size_t maxsize = 1000;
 
 const int numOfDevice = 1;
 
-const size_t n = 1024;
+const size_t n = 2048;
 const size_t m = 1024;
-const size_t p = 1024;
+const size_t p = 2048;
 
 const size_t sizeX = 16;
 const size_t sizeY = 16;
@@ -138,7 +138,25 @@ int main() {
         return 1;
     }
 
-
+    size_t kernelWorkGroupSize;
+    size_t actualKernelWorkGroupSizeBytes;
+    errCode = clGetKernelWorkGroupInfo(kernel, deviceIds[numOfDevice], CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t),
+                                       &kernelWorkGroupSize, &actualKernelWorkGroupSizeBytes);
+    size_t kernelPreferredWorkGroupSizeMultipe;
+    size_t actualKernelPreferredWorkGroupSizeMultipe;
+    errCode = clGetKernelWorkGroupInfo(kernel, deviceIds[numOfDevice], CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE, sizeof(size_t),
+                                       &kernelPreferredWorkGroupSizeMultipe, &actualKernelPreferredWorkGroupSizeMultipe);
+    cl_ulong kernelLocalMemSize;
+    size_t actualKernelLocalMemSize;
+    errCode = clGetKernelWorkGroupInfo(kernel, deviceIds[numOfDevice], CL_KERNEL_LOCAL_MEM_SIZE, sizeof(size_t),
+                                       &kernelLocalMemSize, &actualKernelLocalMemSize);
+    printf("GetKernelWorkGroupInfo errCode %d\n", errCode);
+    if (errCode != 0) {
+        return 1;
+    }
+    printf("KernelWorkSize: %lu\n", kernelWorkGroupSize);
+    printf("KernelLocalMemSize: %llu\n", kernelLocalMemSize);
+    printf("KernelPreferredWorkGroupSizeMultipe: %lu\n", kernelPreferredWorkGroupSizeMultipe);
 
 
 
