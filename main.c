@@ -17,8 +17,17 @@ void printMatrix(float *matrix, int n, int m) {
 
 
 const size_t maxsize = 1000;
+
+
 const int numOfDevice = 1;
-//char program[50000];
+
+const size_t n = 4096;
+const size_t m = 2048;
+const size_t p = 4096;
+
+const size_t sizeX = 2;
+const size_t sizeY = 2;
+
 
 int main() {
     cl_int errCode = -1;
@@ -102,7 +111,12 @@ int main() {
         return 1;
     }
 
-    errCode = clBuildProgram(clProg, 1, deviceIds + numOfDevice, NULL, NULL, NULL);
+    char *buildOptions = (char *) calloc(1, 1000 * sizeof(char));
+    sprintf(buildOptions, "-D LS0=%d -D LS1=%d", sizeX, sizeY);
+
+    printf("buildOptions: %s\n", buildOptions);
+
+    errCode = clBuildProgram(clProg, 1, deviceIds + numOfDevice, buildOptions, NULL, NULL);
     printf("BuildProgram errCode %d\n", errCode);
 //    if (errCode != 0) {
 //        return 1;
@@ -142,12 +156,6 @@ int main() {
 //    }
 
 
-    const int n = 4;
-    const int m = 4;
-    const int p = 4;
-
-    const sizeX = 2;
-    const sizeY = 2;
 
     float *matrix1 = (float *) malloc(n * m * sizeof(float));
     float *matrix2 = (float *) malloc(m * p * sizeof(float));
@@ -156,12 +164,12 @@ int main() {
     float *matrix31 = (float *) malloc(n * p * sizeof(float));
 
     for (int i = 0; i < n * m; i++) {
-//        matrix1[i] = i + i * n * 0.02 + i * m * 0.034;
-        matrix1[i] = i;
+        matrix1[i] = (1.0 + i + 1.0 * i * n * 0.02 + 1.0 * i * m * 0.034) / (i + 1);
+//        matrix1[i] = i;
     }
     for (int i = 0; i < m * p; i++) {
-//        matrix2[i] = i + i * n * 1.87 + i * m * 1.34;
-        matrix2[i] = i + n * m;
+        matrix2[i] = (1.0 + i + 1.0 * i * n * 1.87 + 1.0 * i * m * 1.34) / (i + 1);
+//        matrix2[i] = i + n * m;
     }
 
     for (int i = 0; i < m; i++) {
@@ -229,10 +237,10 @@ int main() {
 
     cl_event event;
 //    size_t aaa = arrLen;
-    size_t *dimSize[2] = {n, p};
+    size_t dimSize[2] = {n, p};
     size_t *zero[2] = {0, 0};
-    size_t *dimLocal[2] = {sizeX, sizeY};
-    errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 2, zero, dimSize, dimLocal, 0, 0, &event);
+    size_t dimLocal[2] = {sizeX, sizeY};
+    errCode = clEnqueueNDRangeKernel(commandQueue, kernel, 2, NULL, dimSize, dimLocal, 0, 0, &event);
     printf("clEnqueueNDRangeKernel errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
@@ -258,18 +266,20 @@ int main() {
     cl_ulong begin;
     cl_ulong end;
     size_t tmp;
-    errCode = clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_START, sizeof(begin), &begin, &tmp);
+    errCode = clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_START, sizeof(cl_ulong), &begin, &tmp);
     printf("clGetEventProfilingInfo1 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
-    errCode = clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_END, sizeof(end), &end, &tmp);
+    errCode = clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_END, sizeof(cl_ulong), &end, &tmp);
     printf("clGetEventProfilingInfo2 errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
     }
 
     printf("Time: %lldms\n", (end - begin) / 1000000);
+    printf("Time begin: %lldms\n", begin);
+    printf("Time end: %lldms\n", end);
 
 
     errCode = clReleaseKernel(kernel);
@@ -319,8 +329,9 @@ int main() {
     int res = 0;
     for (int i = 0; i < n * p; i++) {
 //        if (abs(matrix31[i] - matrix3[i]) >= 0.1 * ((matrix31[i] > matrix3[i]) ? matrix31[i] : matrix3[i])) {
-        if (abs(matrix31[i] - matrix3[i]) >= 000.1) {
-//            printf("someshit: %14.6f %14.6f\n", matrix3[i], matrix31[i]);
+        float diff = matrix31[i] - matrix3[i];
+        if ((diff > 0 ? diff : (-diff)) >= 0.001 * ((matrix31[i] > matrix3[i]) ? matrix31[i] : matrix3[i])) {
+            printf("someshit: %14.6f %14.6f i:%d j: %d\n", matrix3[i], matrix31[i], i / p, i % p);
             res = -1;
             break;
         }
@@ -334,10 +345,10 @@ int main() {
     printf("Result of comparing: %d\n", res);
     printf("time: %lld ms\n", tt);
 
-    printMatrix(matrix1, n, m);
-    printMatrix(matrix2, m, p);
-    printMatrix(matrix3, n, p);
-    printMatrix(matrix31, n, p);
+//    printMatrix(matrix1, n, m);
+//    printMatrix(matrix2, m, p);
+//    printMatrix(matrix3, n, p);
+//    printMatrix(matrix31, n, p);
 
 
 
