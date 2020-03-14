@@ -12,17 +12,24 @@ kernel void add(global const float *a, global const float *b, global float *c, c
     uint cache1 = id1 * m;
     float temp = 0;
 
-    local float at[LS0 * LS1];
-    local float bt[LS0 * LS1];
+//    local float at[LS1 * LS1];
+//    local float bt[LS1 * LS1];
+    local float at[LS1][LS1];
+    local float bt[LS1][LS1];
 
     for (uint i = 0; i < (m / LS1); i++) {
-        at[x * LS0 + y] = a[cache0 + i * LS0 + y];
-        bt[y * LS1 + x] = b[cache1 + i * LS1 + x];
+//        at[x * LS1 + y] = a[cache0 + i * LS1 + y];
+//        bt[y * LS1 + x] = b[cache1 + i * LS1 + x];
+        at[x][y] = a[cache0 + i * LS1 + y];
+//        bt[x][y] = b[cache1 + i * LS1 + x];
+        bt[y][x] = b[cache1 + i * LS1 + x];
 
         barrier(CLK_LOCAL_MEM_FENCE);
 
         for (uint k = 0; k < LS1; k++) {
-            temp += at[x * LS0 + k] * bt[y * LS1 + k];
+//            temp += at[x * LS1 + k] * bt[y * LS1 + k];
+//            temp += at[x][k] * bt[k][y];
+            temp += at[x][k] * bt[y][k];
         }
     }
     c[id0 * p + id1] = temp;

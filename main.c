@@ -21,12 +21,12 @@ const size_t maxsize = 1000;
 
 const int numOfDevice = 1;
 
-const size_t n = 4096;
-const size_t m = 2048;
-const size_t p = 4096;
+const size_t n = 1024;
+const size_t m = 1024;
+const size_t p = 1024;
 
-const size_t sizeX = 2;
-const size_t sizeY = 2;
+const size_t sizeX = 16;
+const size_t sizeY = 16;
 
 
 int main() {
@@ -93,9 +93,9 @@ int main() {
     fseek(fp, 0L, SEEK_END);
     size_t fileSize = ftell(fp);
     fseek(fp, 0, SEEK_SET);
-    char *program = (char *) malloc(fileSize * sizeof(char));
+    char *program = (char *) malloc(fileSize * sizeof(char) + 2);
     char ch = 0;
-    int index = 0;
+    size_t index = 0;
     while ((ch = fgetc(fp)) != EOF) {
         program[index++] = ch;
     }
@@ -112,7 +112,7 @@ int main() {
     }
 
     char *buildOptions = (char *) calloc(1, 1000 * sizeof(char));
-    sprintf(buildOptions, "-D LS0=%d -D LS1=%d", sizeX, sizeY);
+    sprintf(buildOptions, "-D LS1=%d", sizeX);
 
     printf("buildOptions: %s\n", buildOptions);
 
@@ -164,12 +164,12 @@ int main() {
     float *matrix31 = (float *) malloc(n * p * sizeof(float));
 
     for (int i = 0; i < n * m; i++) {
-        matrix1[i] = (1.0 + i + 1.0 * i * n * 0.02 + 1.0 * i * m * 0.034) / (i + 1);
-//        matrix1[i] = i;
+//        matrix1[i] = (1.0 + i + 1.0 * i * n * 0.02 + 1.0 * i * m * 0.034) / (i + 1);
+        matrix1[i] = i;
     }
     for (int i = 0; i < m * p; i++) {
-        matrix2[i] = (1.0 + i + 1.0 * i * n * 1.87 + 1.0 * i * m * 1.34) / (i + 1);
-//        matrix2[i] = i + n * m;
+//        matrix2[i] = (1.0 + i + 1.0 * i * n * 1.87 + 1.0 * i * m * 1.34) / (i + 1);
+        matrix2[i] = i + n * m;
     }
 
     for (int i = 0; i < m; i++) {
@@ -246,7 +246,7 @@ int main() {
         return 1;
     }
 
-    errCode = clEnqueueReadBuffer(commandQueue, buffer3, 1, 0, sizeof(int) * n * p, matrix3, 0, 0, 0);
+    errCode = clEnqueueReadBuffer(commandQueue, buffer3, 1, 0, sizeof(float) * n * p, matrix3, 0, 0, 0);
     printf("Enqueue read buffer errCode %d\n", errCode);
     if (errCode != 0) {
         return 1;
@@ -330,8 +330,8 @@ int main() {
     for (int i = 0; i < n * p; i++) {
 //        if (abs(matrix31[i] - matrix3[i]) >= 0.1 * ((matrix31[i] > matrix3[i]) ? matrix31[i] : matrix3[i])) {
         float diff = matrix31[i] - matrix3[i];
-        if ((diff > 0 ? diff : (-diff)) >= 0.001 * ((matrix31[i] > matrix3[i]) ? matrix31[i] : matrix3[i])) {
-            printf("someshit: %14.6f %14.6f i:%d j: %d\n", matrix3[i], matrix31[i], i / p, i % p);
+        if (((diff > 0 ? diff : (-diff)) >= 0.0001 * ((matrix31[i] > matrix3[i]) ? matrix31[i] : matrix3[i]))) {
+            printf("someshit: %24.6f %24.6f i:%d j: %d diff: %f\n", matrix3[i], matrix31[i], i / p, i % p, diff);
             res = -1;
             break;
         }
@@ -340,7 +340,7 @@ int main() {
     gettimeofday(&stop, NULL);
     long long int tt = ((stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec) / 1000;
 
-    printf("someshit: %5.0f\n", matrix3[0]);
+    printf("someshit: %14.6f %14.6f\n", matrix3[0], matrix31[0]);
 
     printf("Result of comparing: %d\n", res);
     printf("time: %lld ms\n", tt);
